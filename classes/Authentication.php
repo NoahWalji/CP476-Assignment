@@ -3,11 +3,11 @@
 
     class Authentication {
 
-        public static function userSignup($username, $email, $password, $repassword) {
+        public static function userSignup($nickname, $email, $password, $repassword) {
             $conn = dbConnect();
             $message = "";
         
-            $sql = "SELECT * FROM users WHERE username='$username'";
+            $sql = "SELECT * FROM users WHERE nickname='$nickname'";
             $usernameCheck = mysqli_query($conn, $sql);
     
             $sql = "SELECT * FROM users WHERE email='$email'";
@@ -19,10 +19,9 @@
     
             else if (mysqli_num_rows($usernameCheck) == 0 && mysqli_num_rows($emailCheck) == 0) {
                 $hash = password_hash($password, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO users (username,email,password) VALUES ('$username', '$email', '$hash')";
+                $sql = "INSERT INTO users (nickname,email,password) VALUES ('$nickname', '$email', '$hash')";
                 $result = mysqli_query($conn, $sql);
-                header("location: ../login.php");
-                exit;
+                return "";
             }
     
             else {
@@ -49,12 +48,11 @@
             if (mysqli_num_rows($userLogin) == 1) {
                 $userData = $userLogin->fetch_assoc();
                 if (password_verify($password, $userData["password"])) {
-                    $message = "Successfully logged in. Welcome: " . $userData["username"];
+                    $message = "Successfully logged in. Welcome: " . $userData["nickname"];
                     $_SESSION["loggedin"] = true;
-                    $_SESSION["username"] = $userData["username"];
+                    $_SESSION["nickname"] = $userData["nickname"];
                     $_SESSION["uid"] = $userData["uid"];
-                    header("location: ../index.php");
-                    exit;
+                    return "";
                 }
     
                 else {
@@ -65,7 +63,6 @@
             else {
                 $message = "This email address is not registered to the site.";
             }
-    
             return $message;
         }
 

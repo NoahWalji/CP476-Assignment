@@ -11,7 +11,7 @@
             $channelNameCheck = mysqli_query($conn, $sql);
     
             if (mysqli_num_rows($channelNameCheck) == 0) {
-                $sql = "INSERT INTO channels (channel_name,description,creator) VALUES ('$channelName', '$channelDescription', '$username')";
+                $sql = "INSERT INTO channels (channel_name) VALUES ('$channelName')";
                 $result = mysqli_query($conn, $sql);
     
                 $sql = "CREATE TABLE channel_$channelName (id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, sender_id int, message varchar(255), sent_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)";

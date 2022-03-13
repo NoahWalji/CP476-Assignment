@@ -2,10 +2,10 @@
     function dbConnect() {
         
         // MySQL Connection Info
-        $servername = "localhost";
-        $username = "root";
-        $password = "cp476group";
-        $db = "cp476";
+        $servername = "naabe.cloud";
+        $username = "cp476";
+        $password = "cp476";
+        $db = "db_cp476";
     
         // Create connection
         $conn = new mysqli($servername, $username, $password, $db);

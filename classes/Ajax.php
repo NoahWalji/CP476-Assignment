@@ -12,7 +12,17 @@
                 $email = $_POST["email"];
                 $password = $_POST["password"];
                 $message = Authentication::userLogin($email, $password);
-                return $message;
+
+                if ($message === "") {
+                    header("location: ../index.php");
+                }
+
+                else {
+                    $_SESSION["error"] = "<div class=\"alert alert-danger\" role=\"alert\">$message</div>";
+                    header("location: ../login.php");
+                }
+
+
             } 
 
             else if ($ajax == "signup") {
@@ -21,7 +31,15 @@
                 $password = $_POST["password"];
                 $repassword = $_POST["repassword"];
                 $message = Authentication::userSignup($username, $email, $password, $repassword);
-                return $message;
+                if ($message === "") {
+                    $_SESSION["error"] = "<div class=\"alert alert-success\" role=\"alert\">Successfully signed up. Please login below!</div>";
+                    header("location: ../login.php");
+                }
+
+                else {
+                    $_SESSION["error"] = "<div class=\"alert alert-danger\" role=\"alert\">$message</div>";
+                    header("location: ../signup.php");
+                }
             }
     
             else if ($ajax == "logout") {
