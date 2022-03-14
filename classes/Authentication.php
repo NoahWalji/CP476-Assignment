@@ -74,6 +74,51 @@
         
             }
         }
+
+        public static function getUserData($uid) {
+            $conn = dbConnect();
+            $sql = "SELECT * FROM users WHERE uid = $uid";
+            $userData = $conn->query($sql)->fetch_assoc();
+
+            return $userData;
+        }
+
+        public static function changeUserSettings($nickname, $email, $password, $repassword) {
+            $conn = dbConnect();
+            $message = "";
+        
+            $sql = "SELECT * FROM users WHERE nickname='$nickname'";
+            $usernameCheck = mysqli_query($conn, $sql);
+    
+            $sql = "SELECT * FROM users WHERE email='$email'";
+            $emailCheck = mysqli_query($conn, $sql);
+    
+            if ($password != $repassword) {
+                $message = "The entered passwords do not match";
+            }
+    
+            else if (mysqli_num_rows($usernameCheck) == 0 && mysqli_num_rows($emailCheck) == 0) {
+                $sql = "UPDATE users SET ";
+                $sql .= $nickname != "" ? "nickname = '$nickname'," : "";
+                $sql .= $email != "" ? "email =  '$email'," : ""; 
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $sql .= $password != "" ? "password = '$hash'," : "";
+                $sql = rtrim($sql, ',');
+                $result = mysqli_query($conn, $sql);
+
+                if ($nickname != "") {
+                    $_SESSION["nickname"] = $nickname;
+                }
+
+                return "";
+            }
+    
+            else {
+                $message = "A user with this email and/or username already exists!";
+            }
+    
+            return $message;
+        }
     }
 
 ?>
