@@ -1,6 +1,5 @@
 <?php
     require 'sql-connect.php';
-
     class Authentication {
 
         public static function userSignup($nickname, $email, $password, $repassword) {
@@ -19,7 +18,7 @@
     
             else if (mysqli_num_rows($usernameCheck) == 0 && mysqli_num_rows($emailCheck) == 0) {
                 $hash = password_hash($password, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO users (nickname,email,password) VALUES ('$nickname', '$email', '$hash')";
+                $sql = "INSERT INTO users (nickname,email,password,profile_image) VALUES ('$nickname', '$email', '$hash', 'images/default-pfp.png')";
                 $result = mysqli_query($conn, $sql);
                 return "";
             }
@@ -52,6 +51,7 @@
                     $_SESSION["loggedin"] = true;
                     $_SESSION["nickname"] = $userData["nickname"];
                     $_SESSION["uid"] = $userData["uid"];
+                    $_SESSION["pfp"] = $userData["profile_image"];
                     return "";
                 }
     
@@ -83,7 +83,7 @@
             return $userData;
         }
 
-        public static function changeUserSettings($nickname, $email, $password, $repassword) {
+        public static function changeUserSettings($nickname, $email, $password, $repassword, $file) {
             $conn = dbConnect();
             $message = "";
         
@@ -103,12 +103,24 @@
                 $sql .= $email != "" ? "email =  '$email'," : ""; 
                 $hash = password_hash($password, PASSWORD_DEFAULT);
                 $sql .= $password != "" ? "password = '$hash'," : "";
+
+                if ($file != null) {
+                    $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+                    $target = $_SERVER['DOCUMENT_ROOT']."/images/".$_SESSION["uid"].".".$ext;
+                    $sql .= "profile_image = '/images/".$_SESSION["uid"].".".$ext."'";
+                    if(file_exists($target)) unlink($target);
+                    move_uploaded_file($file["tmp_name"], $target);
+                    $_SESSION["pfp"] = $target;
+                }
+
+
                 $sql = rtrim($sql, ',');
                 $result = mysqli_query($conn, $sql);
 
                 if ($nickname != "") {
                     $_SESSION["nickname"] = $nickname;
                 }
+
 
                 return "";
             }

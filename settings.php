@@ -15,13 +15,19 @@
         if(!isset($_SESSION['uid'])) { 
             exit;
         }
-        $userData = Authentication::getUserData($_SESSION["uid"]); 
+        $userData = Authentication::getUserData($_SESSION["uid"]);
     ?>
     <div class="container">
         <h1 id="login-welcome">Hello <?php echo($_SESSION["nickname"]) ?>!</h1>
-        <img class="settings-pfp" src="images/default-pfp.png" alt="Avatar">
         <?php if(isset($_SESSION['error'])) { echo $_SESSION['error']; unset($_SESSION['error']); } ?>
-        <form action="classes/Ajax.php" method="post">
+        <form action="classes/Ajax.php" method="post" enctype="multipart/form-data">
+            <div class="profile-pic">
+                <img class="settings-pfp" src=<?php echo($userData["profile_image"]); ?> alt="Avatar">
+                <label class="profile-pic-text">
+                    <span>Change</span>
+                    <input id="pfp-upload" type="file" accept="image/*" name="pfp"/>
+                </label>
+            </div>
             <div class="form-group">
                 <label for="username">Nickname:</label>
                 <input type="text" name="username" class="form-control" id="username" placeholder=<?php echo($userData["nickname"]) ?>>

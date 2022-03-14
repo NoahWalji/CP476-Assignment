@@ -51,7 +51,11 @@
                 $username = $_POST["username"];
                 $password = $_POST["password"];
                 $repassword = $_POST["repassword"];
-                $message = Authentication::changeUserSettings($username,$email,$password,$repassword);
+                $file = null;
+                if(file_exists($_FILES['pfp']['tmp_name']) && is_uploaded_file($_FILES['pfp']['tmp_name'])) {
+                    $file = $_FILES["pfp"];
+                }
+                $message = Authentication::changeUserSettings($username,$email,$password,$repassword, $file);
                 if ($message === "") {
                     $_SESSION["error"] = "<div class=\"alert alert-success\" role=\"alert\">Successfully updated changed settings!</div>";
                     header("location: ../settings.php");

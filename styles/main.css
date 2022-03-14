@@ -25,11 +25,51 @@
 }
 
 /* User Settings */
-.settings-pfp {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.profile-pic {
+    position: relative;
+    overflow: hidden;
     border-radius: 50%;
-    border: 1px solid;
     width: 25%;
+    margin: auto;
 }
+.settings-pfp {
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+    display: block;
+    border: 1px solid;
+    border-radius: 50%;
+    width: 100%;
+}
+
+.settings-pfp:hover {
+    opacity: .5;
+    background-color: red;
+}
+
+#pfp-upload {
+    opacity: 0;
+}
+  
+.profile-pic-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 24px;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+}
+
+.profile-pic:hover .profile-pic-text {
+    opacity: 1;
+  }
+  
+  .profile-pic:hover .settings-pfp {
+    opacity: .5;
+  }
