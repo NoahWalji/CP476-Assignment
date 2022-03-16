@@ -1,5 +1,6 @@
 <?php
     require("Authentication.php");
+    require("Channel.php");
     session_start();
     ajaxAction();
 
@@ -8,6 +9,7 @@
         if (isset($_POST["ajaxCall"])) {
             $ajax = $_POST["ajaxCall"];
 
+            // Login Ajax Script
             if ($ajax == "login") {
                 $email = $_POST["email"];
                 $password = $_POST["password"];
@@ -25,6 +27,7 @@
 
             } 
 
+            // Signup Ajax Script
             else if ($ajax == "signup") {
                 $email = $_POST["email"];
                 $username = $_POST["username"];
@@ -42,10 +45,12 @@
                 }
             }
     
+            // Logout Ajax Script
             else if ($ajax == "logout") {
                 Authentication::userLogout();
             }
 
+            // User Settings Change Ajax Script
             else if ($ajax == "userChange") {
                 $email = $_POST["email"];
                 $username = $_POST["username"];
@@ -65,6 +70,17 @@
                     $_SESSION["error"] = "<div class=\"alert alert-danger\" role=\"alert\">$message</div>";
                     header("location: ../settings.php");
                 }
+            }
+
+            else if ($ajax == "getChannels") {
+                $channels = Channel::getChannels();
+                echo json_encode($channels);
+            }
+
+            else if ($ajax == "addChannel") {
+                $channelName = $_POST["channelName"];
+                Channel::channel_create($channelName);
+                header("location: ../index.php");
             }
         }
 

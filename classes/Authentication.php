@@ -1,5 +1,5 @@
 <?php
-    require 'sql-connect.php';
+    require_once 'sql-connect.php';
     class Authentication {
 
         public static function userSignup($nickname, $email, $password, $repassword) {
@@ -86,6 +86,7 @@
         public static function changeUserSettings($nickname, $email, $password, $repassword, $file) {
             $conn = dbConnect();
             $message = "";
+            $uid = $_SESSION["uid"];
         
             $sql = "SELECT * FROM users WHERE nickname='$nickname'";
             $usernameCheck = mysqli_query($conn, $sql);
@@ -106,11 +107,17 @@
 
                 if ($file != null) {
                     $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
-                    $target = $_SERVER['DOCUMENT_ROOT']."/images/".$_SESSION["uid"].".".$ext;
-                    $sql .= "profile_image = '/images/".$_SESSION["uid"].".".$ext."'";
+                    $target = $_SERVER['DOCUMENT_ROOT']."/images/".$_SESSION["uid"]."-".time().".".$ext;
+                    $sql .= "profile_image = '/images/".$_SESSION["uid"]."-".time().".".$ext."'";
                     if(file_exists($target)) unlink($target);
                     move_uploaded_file($file["tmp_name"], $target);
                     $_SESSION["pfp"] = $target;
+
+                    $oldPfp = mysqli_query($conn, "SELECT * FROM users WHERE uid='$uid'")->fetch_assoc()["profile_image"];
+
+                    if (file_exists($_SERVER['DOCUMENT_ROOT'].$oldPfp)) {
+                        unlink($_SERVER['DOCUMENT_ROOT'].$oldPfp);
+                    }
                 }
 
 
