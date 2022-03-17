@@ -82,6 +82,12 @@
                 Channel::channel_create($channelName);
                 header("location: ../index.php");
             }
+
+            else if ($ajax == "getMessages") {
+                $channelName = $_POST["channelName"];
+                $messages = Channel::getChannelMessages($channelName);
+                echo json_encode($messages);
+            }
         }
 
         else {

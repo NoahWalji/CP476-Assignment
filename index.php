@@ -26,11 +26,19 @@
                 <h2 id="login-welcome">Chat</h2>
                 <div class="card chatDiv">
                     <div class="card-body">
+                        <ul class="list-group messagesGroup"></ul>
                     </div>
                 </div>
                 </div>
             </div>
         </div>
+        <form id="sendMessage">
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <input type="text" name="message" class="form-control" id="message" placeholder="Enter a chat message">
+        </div>
+        <button type="submit" class="textSubmit btn btn-primary">Login</button>
+        </form>
     </div>
 </body>
 </html>

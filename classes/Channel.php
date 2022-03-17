@@ -36,6 +36,20 @@
             return $listOfChannels;
         }
 
+        public static function getChannelMessages($channelName) {
+            $conn = dbConnect();
+            $sql = "SELECT C.channel_name,M.channel_id, M.contents, U.nickname, U.profile_image, M.time FROM users AS U INNER JOIN messages AS M ON M.author = U.uid INNER JOIN channels AS C ON C.channel_id = M.channel_id WHERE channel_name ='$channelName'";
+            $channelMessage= array();
+            $query = mysqli_query($conn, $sql);
+
+            while($row = $query->fetch_array(MYSQLI_ASSOC)) {
+                $channelMessage[] = $row;
+            }
+
+            return $channelMessage;
+
+        }
+
         public static function send_message($channelName, $message, $uid) {
             $conn = dbConnect();
             $message = "";
