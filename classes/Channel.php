@@ -52,21 +52,16 @@
 
         public static function send_message($channelName, $message, $uid) {
             $conn = dbConnect();
-            $message = "";
             $sql = "SELECT * FROM channels WHERE channel_name='$channelName'";
-            $channelNameCheck = mysqli_query($conn, $sql);
+            $channelNameCheck = $conn->query($sql);
     
             if (mysqli_num_rows($channelNameCheck) == 1) {
-                $sql = "INSERT INTO messages (sender_id,message) VALUES ('$uid', '$message')";
+                $channelId = $channelNameCheck->fetch_assoc()["channel_id"];
+                $sql = "INSERT INTO messages (author,channel_id,contents) VALUES ('$uid',$channelId,'$message')";
                 $result = mysqli_query($conn, $sql);
-                $message = "Message sent";
             }
     
-            else {
-                $message = "A channel with this name does not exists!";
-            }
-    
-            echo $message;
+            return $message;
         }
     }
 

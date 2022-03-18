@@ -88,6 +88,11 @@
                 $messages = Channel::getChannelMessages($channelName);
                 echo json_encode($messages);
             }
+
+            else if ($ajax == "sendMessage") {
+                $message = Channel::send_message($_POST["channel"], $_POST["message"],$_POST["uid"]);
+                echo($message);
+            }
         }
 
         else {

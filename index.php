@@ -13,7 +13,12 @@
     <?php
         require("nav.php");
         require("add-channel.html");
+        
     ?>
+    <span id="userNameValue"><?php echo($_SESSION["nickname"]); ?></span>
+    <span id="pfpValue"><?php echo($_SESSION["pfp"]); ?></span>
+    <span id="uidValue"><?php echo($_SESSION["uid"]); ?></span>
+    <span id="channelNameValue"></span>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -37,7 +42,7 @@
             <label for="message">Message:</label>
             <input type="text" name="message" class="form-control" id="message" placeholder="Enter a chat message">
         </div>
-        <button type="submit" class="textSubmit btn btn-primary">Login</button>
+        <button type="submit" class="textSubmit btn btn-primary">Send Message</button>
         </form>
     </div>
 </body>

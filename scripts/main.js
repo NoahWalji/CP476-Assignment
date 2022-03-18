@@ -1,19 +1,42 @@
 $(document).ready(function() {
-
+    var value = "";
     jQuery(function($) {
         var webSocket = new WebSocket("ws://localhost");
         webSocket.onerror = function(e) {
 
         }
         webSocket.onmessage = function(e) {
-            var json = JSON.parse(e.data);
-            console.log(json);
+            var json = JSON.parse(JSON.parse(e.data));
+            // Get New Message if On Same Channel
+            if (value == json.channel) {
+                $(".messagesGroup").append("<li class='list-group-item'><img src='"+json.profile_image+"' width='50' height='50'>"
+                +json.author+" | "+json.time+"<br>"
+                +json.message+"</li>")
+            }
         }
         $("#sendMessage").submit(function( event ) {
             event.preventDefault();
+            console.log(value);
             webSocket.send(JSON.stringify({
-                'message':$("#message").val()
+                'author': $("#userNameValue").text(),
+                'uid': $("#uidValue").text(),
+                'channel':value,
+                'message':$("#message").val(),
+                "profile_image":$("#pfpValue").text()
             }))
+            $.ajax({
+                url: "classes/Ajax.php",
+                type: "POST",
+                data: {ajaxCall: "sendMessage", 'uid' : $("#uidValue").text(), 'channel':value, 'message':$("#message").val(),},
+                success: function(response){
+                    console.log(response);
+                }
+            });
+            if (value != "") {
+                $(".messagesGroup").append("<li class='list-group-item'><img src='"+$("#pfpValue").text()+"' width='50' height='50'>"
+                +$("#userNameValue").text()+" | undefined<br>"
+                +$("#message").val()+"</li>")
+            }
           });
     })
     // Loads Channel List
@@ -32,7 +55,7 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.channelItem',function() {
-        console.log($(this).text());
+        value = $(this).text();
         $.ajax({
             url: "classes/Ajax.php",
             type: "POST",
