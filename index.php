@@ -20,6 +20,14 @@
     <span style="display:none;"id="uidValue"><?php echo($_SESSION["uid"]); ?></span>
     <span style="display:none;"id="channelNameValue"></span>
     <div class="container">
+        <?php
+            $loggedIn = isset($_SESSION["loggedin"]) === true ? true : false;
+
+            if (!$loggedIn) {
+            echo("<div class='alert alert-warning' role='alert'>Warning: In order to chat, please login or create an account!</div>");
+            }
+        ?>
+        <div style="display:none;" id="error-message" class='alert alert-danger' role='alert'>Error: Please select a channel before sending a message</div>
         <div class="row">
             <div class="col">
                 <h2 id="login-welcome">Select A Channel</h2>
@@ -36,9 +44,9 @@
                 </div>
                     <form id="sendMessage">
                         <div class="form-group">
-                            <input type="text" name="message" class="form-control" id="message" placeholder="Enter a chat message">
+                            <input required type="text" name="message" class="form-control" id="message" placeholder="Enter a chat message">
                         </div>
-                        <button type="submit" class="textSubmit btn btn-primary">Send Message</button>
+                        <button type="submit" class="textSubmit btn btn-primary" <?php if (!$loggedIn) {echo("disabled");}?>>Send Message</button>
                     </form>
                 </div>
             </div>

@@ -10,6 +10,14 @@
     <title>CP476 Assignment</title>
 </head>
 <body>
+    <?php
+        $loggedIn = isset($_SESSION["loggedin"]) === true ? true : false;
+
+        if ($loggedIn) {
+            header("location: ../settings.php");
+            exit;
+        }
+    ?>
     <?php  require("nav.php");?>
     <div class="container">
         <h1 id="login-welcome">Create an Account</h1>

@@ -89,3 +89,7 @@
   .card-body {
       overflow: scroll;
   }
+
+  .channelItem:active {
+      color: green;
+  }
