@@ -32,7 +32,7 @@
             <input type="password" name="password" class="form-control" id="password" placeholder="Password">
         </div>
         <input type="hidden" value="login" name="ajaxCall"/>
-        <a href="/signup"><button type="button" class="btn btn-success">Signup</button></a>
+        <a href="./signup.php"><button type="button" class="btn btn-success">Signup</button></a>
         <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
