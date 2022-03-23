@@ -9,7 +9,7 @@
         }
 
         else {
-        echo("<li class=\"nav-item\"><a class=\"nav-link active\" href=\"login\">Login</a>");
+        echo("<li class=\"nav-item\"><a class=\"nav-link active\" href=\"login.php\">Login</a>");
         }
     ?>
 </ul>
