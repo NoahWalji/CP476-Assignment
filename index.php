@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="scripts/main.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/main.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>CP476 Assignment</title>
 </head>
@@ -33,7 +34,7 @@
                 <h2 id="login-welcome">Select A Channel</h2>
                 <div class="list-group channelList">
                 </div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChannel">Add A Channel</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChannel"><i class="fa fa-plus" aria-hidden="true"></i> Add A Channel</button>
             </div>
             <div class="col">
                 <h2 id="login-welcome">Chat</h2>
@@ -43,10 +44,10 @@
                     </div>
                 </div>
                     <form id="sendMessage">
-                        <div class="form-group">
+                        <div class="input-group">
                             <input required type="text" name="message" class="form-control" id="message" placeholder="Enter a chat message">
+                            <button type="submit" class="textSubmit btn btn-primary" <?php if (!$loggedIn) {echo("disabled");}?>><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                         </div>
-                        <button type="submit" class="textSubmit btn btn-primary" <?php if (!$loggedIn) {echo("disabled");}?>>Send Message</button>
                     </form>
                 </div>
             </div>

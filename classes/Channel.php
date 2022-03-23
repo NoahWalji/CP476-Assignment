@@ -7,12 +7,17 @@
             $conn = dbConnect();
             $message = "";
     
-            $sql = "SELECT * FROM channels WHERE channel_name='$channelName'";
-            $channelNameCheck = mysqli_query($conn, $sql);
+            $sql = "SELECT * FROM channels WHERE channel_name=?";
+            $prepared = $conn->prepare($sql);
+            $prepared->bind_param("s",$channelName);
+            $prepared->execute();
+            $result = $prepared->get_result();
     
-            if (mysqli_num_rows($channelNameCheck) == 0) {
-                $sql = "INSERT INTO channels (channel_name) VALUES ('$channelName')";
-                $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) == 0) {
+                $sql = "INSERT INTO channels (channel_name) VALUES (?)";
+                $prepared = $conn->prepare($sql);
+                $prepared->bind_param("s",$channelName);
+                $prepared->execute();
     
                 $message = "Channel successfully created";
             }
@@ -27,9 +32,11 @@
         public static function getChannels() {
             $conn = dbConnect();
             $sql = "SELECT channel_name FROM channels";
+            $prepared = $conn->prepare($sql);
+            $prepared->execute();
             $listOfChannels = [];
-            $query = mysqli_query($conn, $sql);
-            while ($channel = mysqli_fetch_array($query)) { 
+            $result = $prepared->get_result();
+            while ($channel = mysqli_fetch_array($result)) { 
                 $listOfChannels[] = $channel["channel_name"];
             }
 
@@ -38,11 +45,14 @@
 
         public static function getChannelMessages($channelName) {
             $conn = dbConnect();
-            $sql = "SELECT C.channel_name,M.channel_id, M.contents, U.nickname, U.profile_image, M.time FROM users AS U INNER JOIN messages AS M ON M.author = U.uid INNER JOIN channels AS C ON C.channel_id = M.channel_id WHERE channel_name ='$channelName'";
+            $sql = "SELECT C.channel_name,M.channel_id, M.contents, U.nickname, U.profile_image, M.time FROM users AS U INNER JOIN messages AS M ON M.author = U.uid INNER JOIN channels AS C ON C.channel_id = M.channel_id WHERE channel_name =?";
+            $prepared = $conn->prepare($sql);
+            $prepared->bind_param("s",$channelName);
+            $prepared->execute();
+            $result = $prepared->get_result();
             $channelMessage= array();
-            $query = mysqli_query($conn, $sql);
 
-            while($row = $query->fetch_array(MYSQLI_ASSOC)) {
+            while($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 $channelMessage[] = $row;
             }
 
@@ -52,13 +62,18 @@
 
         public static function send_message($channelName, $message, $uid) {
             $conn = dbConnect();
-            $sql = "SELECT * FROM channels WHERE channel_name='$channelName'";
-            $channelNameCheck = $conn->query($sql);
+            $sql = "SELECT * FROM channels WHERE channel_name=?";
+            $prepared = $conn->prepare($sql);
+            $prepared->bind_param("s",$channelName);
+            $prepared->execute();
+            $result = $prepared->get_result();
     
-            if (mysqli_num_rows($channelNameCheck) == 1) {
-                $channelId = $channelNameCheck->fetch_assoc()["channel_id"];
-                $sql = "INSERT INTO messages (author,channel_id,contents) VALUES ('$uid',$channelId,'$message')";
-                $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) == 1) {
+                $channelId = $result->fetch_assoc()["channel_id"];
+                $sql = "INSERT INTO messages (author,channel_id,contents) VALUES (?, ?, ?)";
+                $prepared = $conn->prepare($sql);
+                $prepared->bind_param("iis",$uid,$channelId,$message);
+                $prepared->execute();
             }
     
             return $message;
