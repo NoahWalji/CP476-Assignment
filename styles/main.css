@@ -77,11 +77,11 @@
 
   /* Channels */
   .chatDiv .card-body {
-      height: 500px;
+      height: 90vh;
   }
 
   .channelList {
-      height: 540px;
+      height: 94vh;
       border: 1px solid rgba(0,0,0,.125);
       border-radius: .25rem;
   }

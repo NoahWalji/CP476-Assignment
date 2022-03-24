@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card chatDiv">
+                <div class="card chatDiv no-gutters">
                     <div class="card-body">
                         <ul class="list-group messagesGroup"></ul>
                     </div>
