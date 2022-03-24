@@ -29,7 +29,7 @@
             }
         ?>
         <div style="display:none;" id="error-message" class='alert alert-danger' role='alert'>Error: Please select a channel before sending a message</div>
-        <div class="row">
+        <div class="row no-gutters">
             <div class="col-md-2">
                 <div class="list-group channelList">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChannel"><i class="fa fa-plus" aria-hidden="true"></i> Add Channel</button>
