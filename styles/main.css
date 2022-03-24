@@ -1,6 +1,6 @@
 /* Navigation Bar */
 .nav {
-    background-color: #6495ED!important;
+    background-color: #3f51b5!important;
     height: 50px;
 }
 
@@ -93,3 +93,11 @@
   .channelItem:active {
       color: green;
   }
+
+  .list-group-item.active {
+	  background-color: #3f51b5 !important;
+  }
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #3f51b5 !important;
+}
