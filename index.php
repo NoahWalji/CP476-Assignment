@@ -20,7 +20,7 @@
     <span style="display:none;"id="pfpValue"><?php echo($_SESSION["pfp"]); ?></span>
     <span style="display:none;"id="uidValue"><?php echo($_SESSION["uid"]); ?></span>
     <span style="display:none;"id="channelNameValue"></span>
-    <div class="container">
+    <div class="">
         <?php
             $loggedIn = isset($_SESSION["loggedin"]) === true ? true : false;
 
@@ -30,14 +30,12 @@
         ?>
         <div style="display:none;" id="error-message" class='alert alert-danger' role='alert'>Error: Please select a channel before sending a message</div>
         <div class="row">
-            <div class="col">
-                <h2 id="login-welcome">Select A Channel</h2>
+            <div class="col-md-2">
                 <div class="list-group channelList">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChannel"><i class="fa fa-plus" aria-hidden="true"></i> Add Channel</button>
                 </div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChannel"><i class="fa fa-plus" aria-hidden="true"></i> Add A Channel</button>
             </div>
             <div class="col">
-                <h2 id="login-welcome">Chat</h2>
                 <div class="card chatDiv">
                     <div class="card-body">
                         <ul class="list-group messagesGroup"></ul>

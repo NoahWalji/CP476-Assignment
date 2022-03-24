@@ -81,7 +81,6 @@
   }
 
   .channelList {
-      height: 500px;
       border: 1px solid rgba(0,0,0,.125);
       border-radius: .25rem;
   }
