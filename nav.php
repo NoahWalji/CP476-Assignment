@@ -5,7 +5,7 @@
 
         if ($loggedIn) {
         echo("<li class=\"nav-item dropdown\"><a class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">My Account</a>");
-        echo("<div class=\"dropdown-menu\"><a class=\"dropdown-item\" href=\"/settings\">Settings</a><a class=\"dropdown-item\" id=\"logoutButton\" href=\"#\">Logout</a></div></li>");
+        echo("<div class=\"dropdown-menu\"><a class=\"dropdown-item\" href=\"./settings.php\">Settings</a><a class=\"dropdown-item\" id=\"logoutButton\" href=\"#\">Logout</a></div></li>");
         }
 
         else {
