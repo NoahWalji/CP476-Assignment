@@ -99,6 +99,11 @@
 	  border-color: #3f51b5 !important;
   }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus,
+.dropdown-item:focus {
     background-color: #3f51b5 !important;
 }
