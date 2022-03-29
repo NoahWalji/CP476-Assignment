@@ -32,7 +32,7 @@
             }
     
             else {
-                $message = "A user with this email and/or username already exists!";
+                $message = "A user with this email and/or username already exists! (Error: User Signup)";
             }
     
             return $message;
@@ -123,7 +123,7 @@
                 $message = "The entered passwords do not match";
             }
     
-            else if (mysqli_num_rows($usernameCheck) == 0 && mysqli_num_rows($emailCheck) == 0) {
+            else if (mysqli_num_rows($usernameCheck) != 0 && mysqli_num_rows($emailCheck) != 0) {
                 $sql = "UPDATE users SET ";
 
                 if ($nickname != "" ) {
@@ -192,7 +192,7 @@
             }
     
             else {
-                $message = "A user with this email and/or username already exists!";
+                $message = "A user with this email and/or username already exists! (Error: Change User Settings)";
             }
     
             return $message;
