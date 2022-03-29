@@ -123,20 +123,30 @@
                 $message = "The entered passwords do not match";
             }
     
-            else if (mysqli_num_rows($usernameCheck) != 0 && mysqli_num_rows($emailCheck) != 0) {
+            else {
                 $sql = "UPDATE users SET ";
 
-                if ($nickname != "" ) {
+                if ($nickname != ""  && mysqli_num_rows($usernameCheck) == 0) {
                     $sql .= "nickname = ?,";
                     array_push($parameters,$nickname);
                     $types .= "s";
 
                 }
+                
+                else if ($nickname != "" && mysqli_num_rows($usernameCheck) != 0) {
+                    $message = "A user with this email and/or username already exists! (Error: Change User Settings)";
+                    return $message;
+                }
 
-                if ($email != "") {
+                if ($email != "" && mysqli_num_rows($emailCheck) == 0) {
                     $sql .= "email =  ?,"; 
                     array_push($parameters,$email);
                     $types .= "s";
+                }
+
+                else if ($email != "" && mysqli_num_rows($emailCheck) != 0) {
+                    $message = "A user with this email and/or username already exists! (Error: Change User Settings)";
+                    return $message;
                 }
 
 
@@ -191,9 +201,6 @@
                 return "";
             }
     
-            else {
-                $message = "A user with this email and/or username already exists! (Error: Change User Settings)";
-            }
     
             return $message;
         }
